@@ -1,0 +1,20 @@
+{
+    "name": "trivia",
+    "version": "1.0.0",
+    "description": "trivia monorepo",
+    "main": "index.js",
+    "license": "MIT",
+    "private": true,
+    "workspaces": [
+        "packages/*"
+    ],
+    "scripts": {
+        "server": "yarn workspace server start",
+        "client": "yarn workspace client start",
+        "client:build": "yarn workspace client build",
+        "start": "concurrently \"yarn server\" \"yarn client\" "
+    },
+    "dependencies": {
+        "concurrently": "^6.0.2"
+    }
+}
