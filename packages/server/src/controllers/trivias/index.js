@@ -6,9 +6,9 @@ import { getUserFromReq } from '../../utils/userHandler'
  * @param {Request} req
  * @param {Response} res
  */
-export const list = async (req, res) => {
+const list = async (req, res) => {
     const user = getUserFromReq(req)
-    const trivias = Model.find({ userId: user.sub }).exec()
+    const trivias = await Model.find({ userId: user.sub }).exec()
     res.json(trivias)
 }
 
@@ -17,11 +17,16 @@ export const list = async (req, res) => {
  * @param {Request} req
  * @param {Response} res
  */
-export const create = async (req, res) => {
+const create = async (req, res) => {
     const user = getUserFromReq(req)
     const { body } = req
-    const trivia = await Model.create({ ...body, userId: user.sub })
-    res.json(trivia)
+
+    try {
+        const trivia = await Model.create({ ...body, userId: user.sub })
+        res.json(trivia)
+    } catch (err) {
+        res.status(422).json(err)
+    }
 }
 
 /**
@@ -29,7 +34,7 @@ export const create = async (req, res) => {
  * @param {Request} req
  * @param {Response} res
  */
-export const show = async (req, res) => {
+const show = async (req, res) => {
     const user = getUserFromReq(req)
     const { id } = req.params
     const trivia = await Model.findOne({ _id: id, userId: user.sub })
@@ -41,7 +46,7 @@ export const show = async (req, res) => {
     }
 }
 
-export const update = async (req, res) => {
+const update = async (req, res) => {
     const user = getUserFromReq(req)
     const { body } = req
     const { id } = req.params
@@ -53,10 +58,12 @@ export const update = async (req, res) => {
     res.json(trivia)
 }
 
-export const destroy = async (req, res) => {
+const destroy = async (req, res) => {
     const user = getUserFromReq(req)
     const { id } = req.params
     await Model.findOneAndDelete({ _id: id, userId: user.sub })
 
     res.json({ message: 'Trivia deleted' })
 }
+
+export default { create, destroy, list, show, update }

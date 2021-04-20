@@ -11,5 +11,5 @@
  * @returns {User} User object
  */
 export const getUserFromReq = (req) => {
-    return req.oidc.user
+    return req.user
 }

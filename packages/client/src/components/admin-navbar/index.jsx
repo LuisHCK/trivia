@@ -1,25 +1,25 @@
-import React from 'react';
-import { Nav, Navbar } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { APP_TITLE } from '../../providers/app.provider';
+import React from 'react'
+import { Nav, Navbar } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import { APP_TITLE } from '../../providers/app.provider'
 
 const AdminNavbar = () => {
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-            <Link href="/admin">
-                <Navbar.Brand href="#home">{APP_TITLE}</Navbar.Brand>
-            </Link>
+            <Navbar.Brand as={Link} to="/">
+                {APP_TITLE}
+            </Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse>
                 <Nav className="mr-auto"></Nav>
                 <Nav>
-                    <Link href="/api/auth/logout">
-                        <Nav.Link>Salir</Nav.Link>
-                    </Link>
+                    <Nav.Link as={Link} to="/api/auth/logout">
+                        Salir
+                    </Nav.Link>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
-    );
-};
+    )
+}
 
-export default AdminNavbar;
+export default AdminNavbar

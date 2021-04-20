@@ -5,16 +5,19 @@ import reportWebVitals from './reportWebVitals'
 import { Auth0Provider } from '@auth0/auth0-react'
 import './index.scss'
 
+const onRedirectCallback = () => {
+    window.location.href = '/admin'
+}
+
 ReactDOM.render(
-    <React.StrictMode>
-        <Auth0Provider
-            domain={process.env.REACT_APP_AUTH0_DOMAIN}
-            clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
-            audience={`https://${process.env.REACT_APP_AUTH0_DOMAIN}/api/v2/`}
-        >
-            <App />
-        </Auth0Provider>
-    </React.StrictMode>,
+    <Auth0Provider
+        domain={process.env.REACT_APP_AUTH0_DOMAIN}
+        clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
+        audience={`https://${process.env.REACT_APP_AUTH0_DOMAIN}/api/v2/`}
+        onRedirectCallback={onRedirectCallback}
+    >
+        <App />
+    </Auth0Provider>,
     document.getElementById('root')
 )
 

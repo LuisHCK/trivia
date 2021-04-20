@@ -33,13 +33,14 @@ const QuizProgressCard = ({ index, question }) => {
     }, [seconds])
 
     return (
-        <Card className="mb-2">
+        <Card
+            className="mb-2"
+            bg={started ? 'primary' : 'secondary'}
+            text="light"
+        >
+            <Card.Header>Pregunta #{index + 1}</Card.Header>
             <Card.Body>
-                <div className="d-flex align-items-center">
-                    <h5>
-                        Pregunta #{index + 1}: {question?.title}
-                    </h5>
-                </div>
+                <Card.Text>{question?.title}</Card.Text>
                 {started && (
                     <ProgressBar animated variant="success" now={progress} />
                 )}

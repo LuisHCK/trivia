@@ -1,13 +1,17 @@
 import { Router } from 'express'
-import { create, destroy, list, show, update } from '../controllers/trivias'
+import triviaController from '../controllers/trivias'
+import roomController from '../controllers/rooms'
 
 const adminRoute = Router()
 
 // Trivias
-adminRoute.get('/trivias', list)
-adminRoute.post('/trivias', create)
-adminRoute.get('/trivias/:id', show)
-adminRoute.patch('/trivias/:id', update)
-adminRoute.delete('/trivias/:id', destroy)
+adminRoute.get('/trivias', triviaController.list)
+adminRoute.post('/trivias', triviaController.create)
+adminRoute.get('/trivias/:id', triviaController.show)
+adminRoute.patch('/trivias/:id', triviaController.update)
+adminRoute.delete('/trivias/:id', triviaController.destroy)
+
+// Rooms
+adminRoute.post('/rooms', roomController.create)
 
 export default adminRoute

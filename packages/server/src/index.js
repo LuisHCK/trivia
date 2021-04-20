@@ -23,14 +23,14 @@ const corsOptions = {
     origin: '*',
 }
 
+// Body parser
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
 app.use(cors(corsOptions))
 
 // Routing
 app.use('/api/admin', checkJwt, adminRoute)
-
-// Body parser
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
 
 server.listen(port, () => {
     console.log(

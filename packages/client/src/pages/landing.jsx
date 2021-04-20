@@ -15,7 +15,7 @@ const Landing = () => {
 
                 <div className="d-flex w-50 mt-4">
                     <div className="w-50 px-4">
-                        <Link href="/trivia">
+                        <Link to="/trivia">
                             <Button variant="success" block>
                                 Jugar
                             </Button>
@@ -25,7 +25,7 @@ const Landing = () => {
                         <Button
                             onClick={() =>
                                 loginWithRedirect({
-                                    redirectUri: `${window.location.origin}/admin`,
+                                    redirectUri: window.location.origin,
                                 })
                             }
                             block

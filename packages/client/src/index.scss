@@ -1,4 +1,5 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
+@import './assets/vendor/open-color.css';
 
 body {
     margin: 0;
@@ -35,4 +36,36 @@ code {
 
 .home-container .content-wrapper p {
     font-size: 22px;
+}
+
+.participants {
+    max-height: calc(100vh - 220px);
+    overflow: auto;
+    position: relative;
+}
+
+.avatar {
+    width: 48px;
+    min-width: 48px;
+    height: 48px;
+    border-radius: 48px;
+    color: white;
+    font-weight: bolder;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+}
+
+.crown,
+.medal {
+    position: absolute;
+}
+
+.crown {
+    top: 0px;
+}
+
+.medal {
+    bottom: 0px;
 }

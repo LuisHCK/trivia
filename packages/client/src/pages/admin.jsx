@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import AdminNavbar from '../components/admin-navbar'
-import { APP_TITLE } from '../providers/app.provider'
 import { Container, Row } from 'react-bootstrap'
 import QuizCard from '../components/quizz-card'
 import QuizEdit from '../components/quizz-edit'
@@ -8,46 +7,50 @@ import { QuestionFormProvider } from '../context/question-form-context'
 import NewQuizCard from '../components/new-quiz-card'
 import { withAuthenticationRequired } from '@auth0/auth0-react'
 import {
-    createQuiz,
-    getAllQuizzes,
-    updateQuiz,
+    CREATE_TRIVIA,
+    UPDATE_TRIVIA,
+    GET_ALL_TRIVIAS,
 } from '../providers/trivia.admin.provider'
+import Loading from '../components/loading'
+import useAccessToken from '../hooks/useAccessToken'
 
 const Admin = () => {
-    const [quizzes, setQuizzes] = useState([])
     const [modalIsOpen, setModalIsOpen] = useState(false)
-
-    const getQuizzes = async () => {
-        const { data } = await getAllQuizzes()
-        setQuizzes(data.data)
-    }
-
-    useEffect(() => {
-        getQuizzes()
-    }, [])
+    const accessToken = useAccessToken()
+    const [trivias, setTrivias] = useState()
 
     const toggleModal = () => setModalIsOpen((prev) => !prev)
 
-    const handleQuizSubmit = async (quiz) => {
+    const getTrivias = async () => {
+        const { data } = await GET_ALL_TRIVIAS(accessToken)
+        setTrivias(data)
+    }
+
+    const handleTriviaSubmit = async (trivia) => {
         toggleModal()
 
-        if (quiz._id) {
-            await updateQuiz(quiz._id, quiz)
-            getQuizzes()
+        if (trivia._id) {
+            await UPDATE_TRIVIA(trivia._id, trivia, accessToken)
         } else {
-            await createQuiz(quiz)
-            getQuizzes()
+            await CREATE_TRIVIA(trivia, accessToken)
+            getTrivias()
         }
     }
 
     const renderQuizzes = () =>
-        quizzes.map((quiz, index) => (
+        trivias?.map((quiz, index) => (
             <QuizCard
                 key={`quizz-card-${index}`}
                 onClickEdit={toggleModal}
                 quiz={quiz}
             />
         ))
+
+    useEffect(() => {
+        if (accessToken) {
+            getTrivias()
+        }
+    }, [accessToken])
 
     return (
         <QuestionFormProvider>
@@ -67,7 +70,7 @@ const Admin = () => {
                 <QuizEdit
                     isOpen={modalIsOpen}
                     onClose={toggleModal}
-                    onSubmit={handleQuizSubmit}
+                    onSubmit={handleTriviaSubmit}
                 />
             </Fragment>
         </QuestionFormProvider>
@@ -75,5 +78,5 @@ const Admin = () => {
 }
 
 export default withAuthenticationRequired(Admin, {
-    onRedirecting: () => <div>Loading...</div>,
+    onRedirecting: () => <Loading />,
 })

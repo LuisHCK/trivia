@@ -61,4 +61,4 @@ const TriviaSchema = new mongoose.Schema({
 
 mongoose.models = {}
 
-export default mongoose.model('Quiz', TriviaSchema)
+export default mongoose.model('Trivia', TriviaSchema)

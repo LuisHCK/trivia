@@ -24,12 +24,15 @@ const QuizCard = ({ quiz, onClickEdit }) => {
                     <Card.Text>{quiz.description}</Card.Text>
                 </Card.Body>
                 <Card.Footer>
-                    <Link href={`/admin/quiz/${quiz._id}`} passHref>
-                        <Button as="a" variant="success" className="mr-2">
-                            Iniciar
-                            <BsPlayFill />
-                        </Button>
-                    </Link>
+                    <Button
+                        to={`/admin/trivia/${quiz._id}`}
+                        as={Link}
+                        variant="success"
+                        className="mr-2"
+                    >
+                        Iniciar
+                        <BsPlayFill />
+                    </Button>
                     <Button variant="light" onClick={handleEdit}>
                         Editar
                         <BsPencilSquare className="ml-1" />

@@ -1,9 +1,9 @@
 import mongoose from 'mongoose'
 
 const RoomSchema = mongoose.Schema({
-    quizId: {
+    triviaId: {
         type: mongoose.SchemaTypes.ObjectId,
-        ref: 'Quiz',
+        ref: 'Trivia',
         default: '',
     },
     key: {
