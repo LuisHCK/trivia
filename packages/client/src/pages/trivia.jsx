@@ -10,12 +10,12 @@ import Loading from '../components/loading'
 import AnimatedSpinner from '../components/spinner'
 import useAccessToken from '../hooks/useAccessToken'
 import { GET_TRIVIA_BY_ID } from '../providers/trivia.admin.provider'
+import { CREATE_ROOM } from '../providers/room.admin.provider'
 
 const Trivia = () => {
     const { id } = useParams()
     const [trivia, setTrivia] = useState()
     const [room, setRoom] = useState()
-    const [users, setUsers] = useState([])
     const accessToken = useAccessToken()
 
     const getTrivia = async () => {
@@ -23,9 +23,15 @@ const Trivia = () => {
         setTrivia(data)
     }
 
+    const createRoom = async () => {
+        const { data } = await CREATE_ROOM({ triviaId: id }, accessToken)
+        setRoom(data)
+    }
+
     useEffect(() => {
         if (accessToken) {
             getTrivia()
+            createRoom()
         }
     }, [accessToken])
 
@@ -36,9 +42,10 @@ const Trivia = () => {
                 <Container>
                     <div className="d-flex justify-content-between align-items-center">
                         <h1 className="mb-4 mt-2 h2">
-                            {trivia?.title}
-
-                            <Badge variant="info">room id</Badge>
+                            {trivia?.title}{' '}
+                            <Badge variant="info">
+                                {room?.key?.toUpperCase() || 'Cargando...'}
+                            </Badge>
                         </h1>
                         <Button disabled={room?.participants?.length}>
                             Iniciar
@@ -86,7 +93,7 @@ const Trivia = () => {
                                             )
                                         )}
 
-                                        {!users.length && (
+                                        {!room?.participants?.length && (
                                             <Card border="danger">
                                                 <Card.Body>
                                                     <div className="d-flex justify-content-center align-items-center">

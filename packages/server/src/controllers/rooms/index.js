@@ -1,5 +1,6 @@
 import Model from '../../models/room'
 import { getUserFromReq } from '../../utils/userHandler'
+import genId from '../../utils/genId'
 
 /**
  * Create a new Trivia

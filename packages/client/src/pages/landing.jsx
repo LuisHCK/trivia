@@ -1,11 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { APP_TITLE } from '../providers/app.provider'
 import { useAuth0 } from '@auth0/auth0-react'
+import { useHistory } from 'react-router-dom'
 
 const Landing = () => {
-    const { loginWithRedirect } = useAuth0()
+    const { loginWithRedirect, isAuthenticated } = useAuth0()
+    const history = useHistory()
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            history.push('/admin')
+        }
+    }, [isAuthenticated])
 
     return (
         <main className="home-container">
