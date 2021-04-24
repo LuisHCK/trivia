@@ -7,6 +7,8 @@ import './database'
 import adminRoute from './routes/admin'
 import cors from 'cors'
 import { checkJwt } from './middlewares/auth0'
+import pulbicRouter from './routes/public'
+import startSocketServer from './socket'
 
 const app = express()
 const server = http.createServer(app)
@@ -14,9 +16,7 @@ const io = socketIO(server)
 
 const port = process.env.PORT || 4000
 
-io.on('connection', (socket) => {
-    console.log(`[${chalk.green.bold('SOCKET')}] Socket.io Connected`)
-})
+startSocketServer(io)
 
 // Auth0 Middleware
 const corsOptions = {
@@ -31,6 +31,7 @@ app.use(cors(corsOptions))
 
 // Routing
 app.use('/api/admin', checkJwt, adminRoute)
+app.use('/api/public', pulbicRouter)
 
 server.listen(port, () => {
     console.log(

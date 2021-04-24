@@ -12,7 +12,7 @@
         "server": "yarn workspace server start",
         "client": "yarn workspace client start",
         "client:build": "yarn workspace client build",
-        "start": "concurrently \"yarn server\" \"yarn client\" "
+        "start": "concurrently -n node,react -c bgMagenta,bgBlue \"yarn server\" \"yarn client\" "
     },
     "dependencies": {
         "concurrently": "^6.0.2"

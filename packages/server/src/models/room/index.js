@@ -10,9 +10,18 @@ const RoomSchema = mongoose.Schema({
         type: String,
         unique: true,
     },
+    started: {
+        type: Boolean,
+        default: false,
+    },
+    currentQuestion: {
+        type: Number,
+        default: 0,
+    },
     participants: [
         {
             id: String,
+            socketId: String,
             name: String,
             score: {
                 type: Number,

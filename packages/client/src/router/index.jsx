@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Admin from '../pages/admin'
 import Landing from '../pages/landing'
+import Room from '../pages/room'
 import Trivia from '../pages/trivia'
 
 const AppRouter = () => {
@@ -17,6 +18,10 @@ const AppRouter = () => {
 
                 <Route path="/admin/trivia/:id" exact>
                     <Trivia />
+                </Route>
+
+                <Route path="/room/:id">
+                    <Room />
                 </Route>
             </Switch>
         </Router>

@@ -20,8 +20,11 @@ const QuestionForm = ({ position, question }) => {
             dispatch({
                 type: UPDATE_QUESTION,
                 payload: {
-                    ...question,
-                    [name]: value,
+                    question: {
+                        ...question,
+                        [name]: value,
+                    },
+                    index: position - 1,
                 },
             })
         }, 300)
@@ -35,7 +38,10 @@ const QuestionForm = ({ position, question }) => {
         })
 
         setTimeout(() => {
-            dispatch({ type: REMOVE_QUESTION, payload: question })
+            dispatch({
+                type: REMOVE_QUESTION,
+                payload: { question, index: position - 1 },
+            })
         }, 500)
     }
 

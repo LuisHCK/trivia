@@ -40,7 +40,7 @@ const reducer = (state, action) => {
                 ...state,
                 questions: [
                     ...state.questions,
-                    { ...emptyQuestion, id: genId() },
+                    { ...emptyQuestion, _id: genId() },
                 ],
                 activeItem: state.questions?.length,
             }
@@ -48,22 +48,14 @@ const reducer = (state, action) => {
         case REMOVE_QUESTION:
             return {
                 ...state,
-                questions: [
-                    ...state.questions.filter(
-                        // return all questions except the questions to delete
-                        (q) => q.id !== action.payload.id
-                    ),
-                ],
+                questions: [...state.questions].splice(action.payload.index, 1),
             }
 
         case UPDATE_QUESTION:
             // Generate new array
             const questions = [...state.questions]
-            const questionIdx = questions.findIndex(
-                (q) => q.id === action.payload.id
-            )
             // update the new array
-            questions[questionIdx] = action.payload
+            questions[action.payload.index] = action.payload.question
 
             return {
                 ...state,

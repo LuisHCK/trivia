@@ -1,0 +1,39 @@
+.room-page {
+    background-color: #26a69a;
+    color: white;
+    min-height: 100vh;
+
+    .welcome-page,
+    .question-page {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        .illustration {
+            width: 100%;
+            height: auto;
+            max-width: 380px;
+        }
+    }
+
+    .responses-container {
+        align-self: flex-end;
+    }
+
+    .question-area {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .response-button {
+        min-height: 8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

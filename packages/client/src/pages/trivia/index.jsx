@@ -1,22 +1,28 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { Badge, Button, Card, Col, Container, Row } from 'react-bootstrap'
-import AdminNavbar from '../components/admin-navbar'
-import UserCard from '../components/user-card'
-import QuizProgressCard from '../components/quiz-progress-card'
+import AdminNavbar from '../../components/admin-navbar'
+import UserCard from '../../components/user-card'
+import QuizProgressCard from '../../components/quiz-progress-card'
 import { BsPlayFill } from 'react-icons/bs'
 import { useParams } from 'react-router-dom'
 import { withAuthenticationRequired } from '@auth0/auth0-react'
-import Loading from '../components/loading'
-import AnimatedSpinner from '../components/spinner'
-import useAccessToken from '../hooks/useAccessToken'
-import { GET_TRIVIA_BY_ID } from '../providers/trivia.admin.provider'
-import { CREATE_ROOM } from '../providers/room.admin.provider'
+import Loading from '../../components/loading'
+import AnimatedSpinner from '../../components/spinner'
+import useAccessToken from '../../hooks/useAccessToken'
+import { GET_TRIVIA_BY_ID } from '../../providers/trivia.admin.provider'
+import { CREATE_ROOM } from '../../providers/room.admin.provider'
+import './index.scss'
+import { adminLoginToRoom, socket, startTrivia } from '../../socket'
+import { socketEvents } from '../../constants'
 
 const Trivia = () => {
     const { id } = useParams()
     const [trivia, setTrivia] = useState()
     const [room, setRoom] = useState()
+    const [participants, setParticipants] = useState([])
     const accessToken = useAccessToken()
+    const [loggedIn, setloggedIn] = useState(false)
+    const socketClient = socket
 
     const getTrivia = async () => {
         const { data } = await GET_TRIVIA_BY_ID(id, accessToken)
@@ -28,17 +34,39 @@ const Trivia = () => {
         setRoom(data)
     }
 
+    const handleStartTrivia = async () => {
+        startTrivia(room.key)
+    }
+
     useEffect(() => {
         if (accessToken) {
             getTrivia()
             createRoom()
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [accessToken])
+
+    useEffect(() => {
+        if (socketClient && room?._id && !loggedIn) {
+            adminLoginToRoom(room.key)
+
+            socketClient.on(socketEvents.LOGIN, (data) => {
+                setParticipants(data)
+            })
+
+            socketClient.on(socketEvents.ROOM_UPDATE, (data) => {
+                setParticipants(data)
+            })
+
+            setloggedIn(true)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [socketClient, room])
 
     return (
         <Fragment>
             <AdminNavbar />
-            <main>
+            <main className="trivia-page">
                 <Container>
                     <div className="d-flex justify-content-between align-items-center">
                         <h1 className="mb-4 mt-2 h2">
@@ -47,7 +75,10 @@ const Trivia = () => {
                                 {room?.key?.toUpperCase() || 'Cargando...'}
                             </Badge>
                         </h1>
-                        <Button disabled={room?.participants?.length}>
+                        <Button
+                            disabled={!room?.participants?.length}
+                            onClick={handleStartTrivia}
+                        >
                             Iniciar
                             <BsPlayFill />
                         </Button>
@@ -82,18 +113,16 @@ const Trivia = () => {
 
                                 <Card.Body>
                                     <div className="participants">
-                                        {room?.participants?.map(
-                                            (user, index) => (
-                                                <UserCard
-                                                    key={'user-card-' + index}
-                                                    user={user}
-                                                    position={index}
-                                                    score={0}
-                                                />
-                                            )
-                                        )}
+                                        {participants?.map((user, index) => (
+                                            <UserCard
+                                                key={'user-card-' + index}
+                                                user={user}
+                                                position={index}
+                                                score={user.score || 0}
+                                            />
+                                        ))}
 
-                                        {!room?.participants?.length && (
+                                        {!participants?.length && (
                                             <Card border="danger">
                                                 <Card.Body>
                                                     <div className="d-flex justify-content-center align-items-center">

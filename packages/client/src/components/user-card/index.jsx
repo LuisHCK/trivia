@@ -4,7 +4,15 @@ import { RiVipCrownFill } from 'react-icons/ri'
 import { IoMdMedal } from 'react-icons/io'
 import { getRandomColor } from '../../utils/random-color'
 
-const UserCard = ({ position, user, score }) => {
+const UserCard = ({
+    position,
+    user,
+    score,
+    className,
+    hideScore,
+    children,
+}) => {
+    const backgroundColor = getRandomColor()
     const renderMedal = () => {
         switch (position) {
             case 0:
@@ -34,19 +42,21 @@ const UserCard = ({ position, user, score }) => {
     }
 
     return (
-        <Card className="mb-2" bg="light">
+        <Card className={`mb-2 ${className}`} bg="light" text="dark">
             <Card.Body>
                 <div className="d-flex align-items-center">
-                    <div
-                        className="avatar"
-                        style={{ backgroundColor: getRandomColor() }}
-                    >
+                    <div className="avatar" style={{ backgroundColor }}>
                         <span>{user?.name?.split('')[0]}</span>
-                        {score && renderMedal()}
+                        {!!score && renderMedal()}
                     </div>
                     <div className="pl-2 d-flex justify-content-between align-items-center w-100">
-                        {user?.name}
-                        <Badge variant="primary">Puntaje: {score || 0}</Badge>
+                        <span className="mr-2">{user?.name}</span>
+                        {!hideScore && (
+                            <Badge variant="primary">
+                                Puntaje: {score || 0}
+                            </Badge>
+                        )}
+                        {children}
                     </div>
                 </div>
             </Card.Body>

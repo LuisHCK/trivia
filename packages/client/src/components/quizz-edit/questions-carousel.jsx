@@ -15,6 +15,7 @@ const QuestionsCarousel = () => {
 
     useEffect(() => {
         setActiveItem(state.activeItem)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.activeItem])
 
     return (

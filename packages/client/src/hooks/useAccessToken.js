@@ -1,6 +1,10 @@
 import { useAuth0 } from '@auth0/auth0-react'
 import { useEffect, useState } from 'react'
 
+/**
+ * Returns acess token
+ * @returns {string} Access token
+ */
 const useAccessToken = () => {
     const [accessToken, setAccessToken] = useState()
     const { getAccessTokenSilently } = useAuth0()

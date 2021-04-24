@@ -1,4 +1,5 @@
 import Model from '../../models/room'
+import Trivia from '../../models/trivia'
 import { getUserFromReq } from '../../utils/userHandler'
 import genId from '../../utils/genId'
 
@@ -32,4 +33,17 @@ const create = async (req, res) => {
     }
 }
 
-export default { create }
+const joinRoom = async (req, res) => {
+    const { key } = req.params
+    const roomInstance = await Model.findOne({ key: key.toLowerCase() }).exec()
+    if (roomInstance) {
+        const triviaInstance = await Trivia.findById(
+            roomInstance.triviaId
+        ).exec()
+        return res.json({ room: roomInstance, trivia: triviaInstance })
+    }
+
+    return res.status(404).json()
+}
+
+export default { create, joinRoom }

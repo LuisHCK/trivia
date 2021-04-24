@@ -54,6 +54,7 @@ const QuizEdit = ({ isOpen, onClose, onSubmit }) => {
 
     useEffect(() => {
         setModalIsOpen(isOpen)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpen])
 
     return (

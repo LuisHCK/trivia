@@ -3,8 +3,7 @@ import { Card, ProgressBar } from 'react-bootstrap'
 
 let TIMEOUT = 20
 
-const QuizProgressCard = ({ index, question }) => {
-    const [started, setStarted] = useState(false)
+const QuizProgressCard = ({ index, question, started }) => {
     const [progress, setProgress] = useState(100)
     const [seconds, setSeconds] = useState(TIMEOUT)
 
@@ -30,6 +29,7 @@ const QuizProgressCard = ({ index, question }) => {
 
     useEffect(() => {
         setProgress(percentage(seconds, TIMEOUT))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [seconds])
 
     return (
