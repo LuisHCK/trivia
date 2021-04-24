@@ -130,6 +130,7 @@ const Welcome = () => {
                 dispatch({ type: roomContextActions.SET_TRIVIA_STARTED })
             })
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [socketClient])
 
     return (

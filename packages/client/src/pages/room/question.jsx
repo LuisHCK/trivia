@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Col, Container, Row, ProgressBar } from 'react-bootstrap'
 import { useHistory, useParams } from 'react-router'
-import { roomContextActions } from '../../constants/context-actions'
 import { useRoomContext } from '../../context/room.context'
 import percentage from '../../utils/percentage'
 import shuffleArray from '../../utils/shuffleArray'
@@ -12,7 +11,7 @@ const responsesOrder = shuffleArray([1, 2, 3, 4])
 
 const Question = () => {
     const { id, questionId } = useParams()
-    const { state, dispatch } = useRoomContext()
+    const { state } = useRoomContext()
     const [currentQuestion, setCurrentQuestion] = useState()
     const [selectedReponse, setSelectedReponse] = useState()
     const [progress, setProgress] = useState(100)
