@@ -1,15 +1,18 @@
 name: remote ssh command
 on: [push]
 jobs:
-
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-    - name: executing remote ssh commands using password
-      uses: appleboy/ssh-action@master
-      with:
-        host: '35.188.172.48'
-        username: luisjcenteno17
-        key: ${{ secrets.SSH_KEY }}
-        script: whoami
+    build:
+        name: Build|
+        runs-on: ubuntu-latest
+        steps:
+            - name: executing remote ssh commands using password
+              uses: appleboy/ssh-action@master
+              with:
+                  host: '35.188.172.48'
+                  username: luisjcenteno17
+                  key: ${{ secrets.SSH_KEY }}
+                  script: |
+                      cd ~/projects/trivia
+                      git pull -f
+                      yarn install
+                      pm2 reload ecosystem.config.js
