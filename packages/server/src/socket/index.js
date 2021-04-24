@@ -1,7 +1,6 @@
 import { Socket } from 'socket.io'
 import { socketEvents } from '../constants/socket-events'
-import { logMessage } from '../utils/logger'
-import { addParticipant, removeParticipant, startTrivia } from './roomActions'
+import { removeParticipant } from './roomActions'
 
 // socket.io server
 const startSocketServer = (io) => {

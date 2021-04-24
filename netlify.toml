@@ -1,0 +1,4 @@
+[[redirects]]
+  from = "/"
+  to = "https://apptrivia.netlify.app"
+  status = 200
