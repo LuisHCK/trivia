@@ -11,5 +11,6 @@ jobs:
       with:
         host: '35.188.172.48'
         username: luisjcenteno17
-        port: ${{ secrets.SSH_KEY }}
+        key: ${{ secrets.SSH_KEY }}
+        port: 22
         script: whoami
