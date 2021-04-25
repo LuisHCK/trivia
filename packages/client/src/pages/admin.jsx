@@ -31,6 +31,7 @@ const Admin = () => {
 
         if (trivia._id) {
             await UPDATE_TRIVIA(trivia._id, trivia, accessToken)
+            getTrivias()
         } else {
             await CREATE_TRIVIA(trivia, accessToken)
             getTrivias()

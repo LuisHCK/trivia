@@ -38,10 +38,7 @@ const reducer = (state, action) => {
         case ADD_QUESTION:
             return {
                 ...state,
-                questions: [
-                    ...state.questions,
-                    { ...emptyQuestion, _id: genId() },
-                ],
+                questions: [...state.questions, { ...emptyQuestion }],
                 activeItem: state.questions?.length,
             }
 
