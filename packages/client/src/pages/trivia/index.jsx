@@ -76,7 +76,7 @@ const Trivia = () => {
                             </Badge>
                         </h1>
                         <Button
-                            disabled={!room?.participants?.length}
+                            disabled={!participants?.length}
                             onClick={handleStartTrivia}
                         >
                             Iniciar
