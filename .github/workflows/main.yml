@@ -8,7 +8,7 @@ jobs:
             - name: executing remote ssh commands using password
               uses: appleboy/ssh-action@master
               with:
-                  host: '35.188.172.48'
+                  host: '35.188.84.165'
                   username: luisjcenteno17
                   key: ${{ secrets.SSH_KEY }}
                   script: |
