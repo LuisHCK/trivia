@@ -1,18 +1,18 @@
-name: remote ssh command
+name: Deployment
 on: [push]
 jobs:
     build:
-        name: Build|
+        name: Deploy to Production
         runs-on: ubuntu-latest
         steps:
-            - name: executing remote ssh commands using password
+            - name: Execution deploy script on remote server
               uses: appleboy/ssh-action@master
               with:
-                  host: '35.188.172.48'
-                  username: luisjcenteno17
+                  host: '3.16.158.121'
+                  username: ubuntu
                   key: ${{ secrets.SSH_KEY }}
                   script: |
-                      cd ~/projects/trivia
+                      cd /opt/app/trivia
                       git pull -f
                       yarn install
                       pm2 reload ecosystem.config.js
