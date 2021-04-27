@@ -38,6 +38,15 @@ const Trivia = () => {
         startTrivia(room.key)
     }
 
+    /**
+     * @returns {Array<Objects>}
+     */
+    const getParticipants = () => {
+        return participants?.sort(
+            (prev, next) => parseFloat(prev.score) - parseFloat(next.score)
+        ).reverse()
+    }
+
     useEffect(() => {
         if (accessToken) {
             getTrivia()
@@ -113,7 +122,7 @@ const Trivia = () => {
 
                                 <Card.Body>
                                     <div className="participants">
-                                        {participants?.map((user, index) => (
+                                        {getParticipants()?.map((user, index) => (
                                             <UserCard
                                                 key={'user-card-' + index}
                                                 user={user}

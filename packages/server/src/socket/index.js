@@ -3,6 +3,11 @@ import { socketEvents } from '../constants/socket-events'
 import { removeParticipant } from './roomActions'
 
 // socket.io server
+/**
+ *
+ * @param {Socket} io
+ * @returns
+ */
 const startSocketServer = (io) => {
     /**
      * Return array of sockets in a room
@@ -80,12 +85,10 @@ const startSocketServer = (io) => {
         socket.on(socketEvents.UPDATE_SCORE, async (score) => {
             if (!socket.isAdmin && socket.participant) {
                 socket.participant.score += score
-                socket
-                    .in(socket.room)
-                    .emit(
-                        socketEvents.ROOM_UPDATE,
-                        await getParticipants(socket.room)
-                    )
+                io.in(socket.room).emit(
+                    socketEvents.ROOM_UPDATE,
+                    await getParticipants(socket.room)
+                )
             }
         })
     })

@@ -6,17 +6,19 @@ import percentage from '../../utils/percentage'
 import shuffleArray from '../../utils/shuffleArray'
 import { socket } from '../../socket'
 import { socketEvents } from '../../constants'
-
-const responsesOrder = shuffleArray([1, 2, 3, 4])
+import { roomContextActions } from '../../constants/context-actions'
 
 const Question = () => {
     const { id, questionId } = useParams()
-    const { state } = useRoomContext()
+    const { state, dispatch } = useRoomContext()
     const [currentQuestion, setCurrentQuestion] = useState()
     const [selectedReponse, setSelectedReponse] = useState()
     const [progress, setProgress] = useState(100)
     const [seconds, setSeconds] = useState(state.trivia.timeout)
     const history = useHistory()
+    const [responsesOrder, setresponsesOrder] = useState(
+        shuffleArray([1, 2, 3, 4])
+    )
 
     const getResponseState = (responseNumber) => {
         if (selectedReponse === responseNumber && responseNumber === 1) {
@@ -53,15 +55,22 @@ const Question = () => {
         const questionIndex = Number(questionId)
 
         if (questionIndex < state.trivia.questions.length - 1) {
+            // Update order
+            setresponsesOrder(shuffleArray([1, 2, 3, 4]))
+
             history.push(`/room/${id}/questions/${questionIndex + 1}`)
             setSeconds(state.trivia.timeout)
+        } else {
+            history.push(`/room/${id}/results`)
         }
     }
 
     const calculateScore = (responseNumber) => {
         if (responseNumber === 1) {
             const score = (progress * 100) / 100
-            socket.emit(socketEvents.UPDATE_SCORE, score)
+            socket.emit(socketEvents.UPDATE_SCORE, score, (data) => {
+                console.log(data)
+            })
         }
     }
 
@@ -115,6 +124,16 @@ const Question = () => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [questionId, state])
+
+    useEffect(() => {
+        socket.on(socketEvents.ROOM_UPDATE, (data) => {
+            dispatch({
+                type: roomContextActions.SET_PARTICIPANTS,
+                payload: data,
+            })
+        })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [socket])
 
     return (
         <Container>

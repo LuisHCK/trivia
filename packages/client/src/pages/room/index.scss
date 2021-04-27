@@ -6,16 +6,17 @@
     .welcome-page,
     .question-page {
         width: 100%;
-        height: 100vh;
+        min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
+        padding: 0 4rem;
 
         .illustration {
             width: 100%;
             height: auto;
-            max-width: 380px;
+            max-width: 200px;
         }
     }
 
@@ -31,7 +32,7 @@
     }
 
     .response-button {
-        min-height: 8rem;
+        min-height: 6rem;
         display: flex;
         align-items: center;
         justify-content: center;

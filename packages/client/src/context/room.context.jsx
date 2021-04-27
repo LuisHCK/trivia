@@ -12,6 +12,7 @@ const storedParticipant = JSON.parse(Cookies.get('participant') || null)
  * @property {boolean} invalidRoom
  * @property {boolean} started
  * @property {number} score
+ * @property {Array<Object>} participants
  */
 
 /**
@@ -23,7 +24,8 @@ const initialState = {
     participant: storedParticipant,
     invalidRoom: false,
     started: false,
-    score: 0
+    score: 0,
+    participants: [],
 }
 
 const RoomContext = createContext(initialState)
@@ -65,6 +67,11 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 score: Number(state.score) + Number(action.payload),
+            }
+        case roomContextActions.SET_PARTICIPANTS:
+            return {
+                ...state,
+                participants: action.payload,
             }
         default:
             return { ...state }

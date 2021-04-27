@@ -5,6 +5,7 @@ import Question from './question'
 import { RoomContextProvider } from '../../context/room.context'
 import InvalidRoom from './invalid-room'
 import './index.scss'
+import Results from './results'
 
 const Room = () => {
     return (
@@ -20,6 +21,9 @@ const Room = () => {
                         </Route>
                         <Route path="/invalid-room" exact>
                             <InvalidRoom />
+                        </Route>
+                        <Route path="/room/:id/results" exact>
+                            <Results />
                         </Route>
                     </Switch>
                 </Router>
