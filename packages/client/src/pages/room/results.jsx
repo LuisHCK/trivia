@@ -4,7 +4,7 @@ import { Bar } from 'react-chartjs-2'
 import { useRoomContext } from '../../context/room.context'
 
 const Results = () => {
-    const { state, dispatch } = useRoomContext()
+    const { state } = useRoomContext()
 
     const options = {
         ticks: {
