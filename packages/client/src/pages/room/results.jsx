@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container } from 'react-bootstrap'
+import { Button, Container } from 'react-bootstrap'
 import { Bar } from 'react-chartjs-2'
 import { useRoomContext } from '../../context/room.context'
 
@@ -65,6 +65,10 @@ const Results = () => {
                 <div className="chart-container">
                     <Bar data={data} options={options} />
                 </div>
+
+                <Button as="a" href="/">
+                    Regresar al inicio
+                </Button>
             </div>
         </Container>
     )
