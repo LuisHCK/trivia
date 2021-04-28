@@ -37,8 +37,6 @@ const QuestionForm = ({ position, question }) => {
             payload: state.questions?.length - 2,
         })
 
-        console.log(position - 1)
-
         setTimeout(() => {
             dispatch({
                 type: REMOVE_QUESTION,

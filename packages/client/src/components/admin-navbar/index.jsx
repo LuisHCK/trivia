@@ -6,7 +6,7 @@ import { APP_TITLE } from '../../providers/app.provider'
 const AdminNavbar = () => {
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-            <Navbar.Brand as={Link} to="/">
+            <Navbar.Brand as={Link} to="/?noredirect=true">
                 {APP_TITLE}
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />

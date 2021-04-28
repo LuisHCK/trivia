@@ -68,9 +68,7 @@ const Question = () => {
     const calculateScore = (responseNumber) => {
         if (responseNumber === 1) {
             const score = (progress * 100) / 100
-            socket.emit(socketEvents.UPDATE_SCORE, score, (data) => {
-                console.log(data)
-            })
+            socket.emit(socketEvents.UPDATE_SCORE, score)
         }
     }
 

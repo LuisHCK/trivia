@@ -3,12 +3,14 @@ import { Button, FormControl, InputGroup, Modal } from 'react-bootstrap'
 import { APP_TITLE } from '../providers/app.provider'
 import { useAuth0 } from '@auth0/auth0-react'
 import { useHistory } from 'react-router-dom'
+import useQuery from '../hooks/useQuery'
 
 const Landing = () => {
     const [showModal, setShowModal] = useState(false)
     const [roomKey, setRoomKey] = useState('')
     const { loginWithRedirect, isAuthenticated } = useAuth0()
     const history = useHistory()
+    const queryParams = useQuery()
 
     const toggleModal = () => setShowModal((prev) => !prev)
 
@@ -27,11 +29,11 @@ const Landing = () => {
     }
 
     useEffect(() => {
-        if (isAuthenticated) {
+        if (isAuthenticated && queryParams.noredirect !== 'true') {
             history.push('/admin')
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isAuthenticated])
+    }, [isAuthenticated, queryParams])
 
     return (
         <Fragment>
