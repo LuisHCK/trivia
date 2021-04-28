@@ -43,9 +43,12 @@ const reducer = (state, action) => {
             }
 
         case REMOVE_QUESTION:
+            const questionsList = [...state.questions]
+            questionsList.splice(action.payload.index, 1)
+
             return {
                 ...state,
-                questions: [...state.questions].splice(action.payload.index, 1),
+                questions: questionsList,
             }
 
         case UPDATE_QUESTION:

@@ -6,18 +6,34 @@ import { useRoomContext } from '../../context/room.context'
 const Results = () => {
     const { state } = useRoomContext()
 
+    const participants = state.participants
+        ?.slice(0, 2)
+        ?.sort((prev, next) => parseFloat(prev.score) - parseFloat(next.score))
+        ?.reverse()
+
     const options = {
-        ticks: {
-            display: false,
-        },
         reponsive: true,
+        mantainAspectRatio: false,
         scales: {
             y: {
-                grid: {
-                    display: false,
-                },
                 ticks: {
                     display: false,
+                },
+                grid: {
+                    display: false,
+                    borderColor: 'transparent',
+                },
+            },
+            x: {
+                ticks: {
+                    color: 'white',
+                    font: {
+                        size: 16,
+                    },
+                },
+                grid: {
+                    display: false,
+                    borderColor: 'transparent',
                 },
             },
         },
@@ -29,29 +45,26 @@ const Results = () => {
     }
 
     const data = {
-        labels: state.participants.map((p) => p.name),
+        labels: participants.map((p) => `${p.name} ${p.score}pt`),
         datasets: [
             {
                 label: 'Puntaje',
-                data: state.participants.map((p) => p.score),
+                data: participants.map((p) => p.score),
                 borderWidth: 1,
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.4)',
-                    'rgba(54, 162, 235, 0.4)',
-                    'rgba(255, 206, 86, 0.4)',
-                    'rgba(75, 192, 192, 0.4)',
-                    'rgba(153, 102, 255, 0.4)',
-                    'rgba(255, 159, 64, 0.4)',
-                ],
+                borderRadius: 15,
+                borderSkipped: false,
+                backgroundColor: ['#FFC107', '#C0C0C0', '#cd7f32'],
             },
         ],
     }
 
     return (
-        <Container className="py-2">
-            <h2>Resultado final</h2>
-            <div style={{ backgroundColor: 'white', padding: '1rem' }}>
-                <Bar data={data} options={options} />
+        <Container>
+            <div className="welcome-page">
+                <h2 className="page-title">Resultado final</h2>
+                <div className="chart-container">
+                    <Bar data={data} options={options} />
+                </div>
             </div>
         </Container>
     )

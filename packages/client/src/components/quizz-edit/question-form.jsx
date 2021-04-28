@@ -37,6 +37,8 @@ const QuestionForm = ({ position, question }) => {
             payload: state.questions?.length - 2,
         })
 
+        console.log(position - 1)
+
         setTimeout(() => {
             dispatch({
                 type: REMOVE_QUESTION,
@@ -69,7 +71,7 @@ const QuestionForm = ({ position, question }) => {
             <Card.Body>
                 <Form.Row>
                     <Form.Group as={Col} md={6} sm={12} controlId="response-1">
-                        <Form.Label>Respuesta #1</Form.Label>
+                        <Form.Label>Respuesta correcta</Form.Label>
                         <Form.Control
                             type="text"
                             placeholder="Escribe aqui la respuesta"

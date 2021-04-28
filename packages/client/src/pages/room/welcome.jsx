@@ -136,11 +136,20 @@ const Welcome = () => {
     return (
         <Container>
             <div className="welcome-page">
-                <h1>¿Estás listo para participar?</h1>
+                <h1 className="page-title">¿Estás listo para participar?</h1>
 
-                <p>{state.trivia?.title}</p>
+                <img
+                    className="illustration"
+                    src={illustration}
+                    alt="trivia illustration"
+                />
 
-                <img className="illustration my-5" src={illustration} alt="" />
+                <p className="trivia-title">{state.trivia?.title}</p>
+
+                <ul className="trivia-details">
+                    <li>Categoría: {state.trivia?.category}</li>
+                    <li>{state.trivia?.questions?.length} preguntas</li>
+                </ul>
 
                 <div>
                     {!!state.participant ? (
@@ -155,7 +164,7 @@ const Welcome = () => {
                 </div>
 
                 {state.participant && (
-                    <div className="mt-4 w-50">
+                    <div className="waiting-button">
                         <Button
                             variant="primary"
                             size="lg"

@@ -2,15 +2,26 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Badge, Button, Card, Col } from 'react-bootstrap'
-import { BsPlayFill, BsPencilSquare } from 'react-icons/bs'
+import { BsPlayFill, BsPencilSquare, BsTrashFill } from 'react-icons/bs'
 import { SET_FORM, useQuestionForm } from '../../context/question-form-context'
 
-const QuizCard = ({ quiz, onClickEdit }) => {
+const QuizCard = ({ quiz, onClickEdit, onClickDelete }) => {
     const { dispatch } = useQuestionForm()
 
     const handleEdit = () => {
         dispatch({ type: SET_FORM, payload: quiz })
         onClickEdit()
+    }
+
+    const handleDelete = () => {
+        if (
+            window.confirm(
+                `Estás seguro de borrar esta Trivia: ${quiz.title}?\n` +
+                    `¡Esta acción no se puede deshacer!`
+            )
+        ) {
+            onClickDelete(quiz)
+        }
     }
 
     return (
@@ -33,9 +44,19 @@ const QuizCard = ({ quiz, onClickEdit }) => {
                         Iniciar
                         <BsPlayFill />
                     </Button>
-                    <Button variant="light" onClick={handleEdit}>
-                        Editar
-                        <BsPencilSquare className="ml-1" />
+                    <Button
+                        variant="light"
+                        className="mr-2"
+                        onClick={handleEdit}
+                    >
+                        <BsPencilSquare />
+                    </Button>
+                    <Button
+                        variant="light"
+                        className="text-danger"
+                        onClick={handleDelete}
+                    >
+                        <BsTrashFill />
                     </Button>
                 </Card.Footer>
             </Card>
@@ -45,6 +66,7 @@ const QuizCard = ({ quiz, onClickEdit }) => {
 
 QuizCard.propTypes = {
     onClickEdit: PropTypes.func,
+    onClickDelete: PropTypes.func,
     quiz: PropTypes.object,
 }
 

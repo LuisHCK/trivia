@@ -7,13 +7,20 @@ import { useEffect, useState } from 'react'
  */
 const useAccessToken = () => {
     const [accessToken, setAccessToken] = useState()
-    const { getAccessTokenSilently } = useAuth0()
+    const { getAccessTokenSilently, loginWithRedirect } = useAuth0()
 
     useEffect(() => {
         const getToken = async () => {
             const token = await getAccessTokenSilently({
                 audience: process.env.REACT_APP_AUTH0_AUDIENCE,
-            })
+            }).catch(() => null)
+
+            if (!token) {
+                loginWithRedirect({
+                    redirectUri: window.location.origin,
+                })
+            }
+
             setAccessToken(token)
         }
 

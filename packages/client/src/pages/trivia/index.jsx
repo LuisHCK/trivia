@@ -42,9 +42,11 @@ const Trivia = () => {
      * @returns {Array<Objects>}
      */
     const getParticipants = () => {
-        return participants?.sort(
-            (prev, next) => parseFloat(prev.score) - parseFloat(next.score)
-        ).reverse()
+        return participants
+            ?.sort(
+                (prev, next) => parseFloat(prev.score) - parseFloat(next.score)
+            )
+            .reverse()
     }
 
     useEffect(() => {
@@ -75,10 +77,10 @@ const Trivia = () => {
     return (
         <Fragment>
             <AdminNavbar />
-            <main className="trivia-page">
+            <main className="trivia-page py-4">
                 <Container>
-                    <div className="d-flex justify-content-between align-items-center">
-                        <h1 className="mb-4 mt-2 h2">
+                    <div className="header">
+                        <h1 className="h2">
                             {trivia?.title}{' '}
                             <Badge variant="info">
                                 {room?.key?.toUpperCase() || 'Cargando...'}
@@ -87,6 +89,7 @@ const Trivia = () => {
                         <Button
                             disabled={!participants?.length}
                             onClick={handleStartTrivia}
+                            variant="success"
                         >
                             Iniciar
                             <BsPlayFill />
@@ -94,7 +97,11 @@ const Trivia = () => {
                     </div>
 
                     <Row>
-                        <Col xs={12} md={7}>
+                        <Col
+                            xs={{ cols: 12, order: 2 }}
+                            md={{ cols: 12, order: 2 }}
+                            lg={{ cols: 7, order: 1 }}
+                        >
                             <Card>
                                 <Card.Header>
                                     <Card.Title>Preguntas</Card.Title>
@@ -114,22 +121,27 @@ const Trivia = () => {
                                 </Card.Body>
                             </Card>
                         </Col>
-                        <Col xs={12} md={5}>
-                            <Card>
+                        <Col
+                            md={{ cols: 12, order: 2 }}
+                            lg={{ cols: 5, order: 2 }}
+                        >
+                            <Card className="mb-4">
                                 <Card.Header>
                                     <Card.Title>Participantes</Card.Title>
                                 </Card.Header>
 
                                 <Card.Body>
                                     <div className="participants">
-                                        {getParticipants()?.map((user, index) => (
-                                            <UserCard
-                                                key={'user-card-' + index}
-                                                user={user}
-                                                position={index}
-                                                score={user.score || 0}
-                                            />
-                                        ))}
+                                        {getParticipants()?.map(
+                                            (user, index) => (
+                                                <UserCard
+                                                    key={'user-card-' + index}
+                                                    user={user}
+                                                    position={index}
+                                                    score={user.score || 0}
+                                                />
+                                            )
+                                        )}
 
                                         {!participants?.length && (
                                             <Card border="danger">

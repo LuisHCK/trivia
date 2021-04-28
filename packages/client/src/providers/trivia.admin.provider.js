@@ -19,3 +19,8 @@ export const GET_TRIVIA_BY_ID = (id, token) => {
     httpClient.defaults.headers.common['Authorization'] = `Bearer ${token}`
     return httpClient.get(`admin/trivias/${id}`)
 }
+
+export const DELETE_TRIVIA = (id, token) => {
+    httpClient.defaults.headers.common['Authorization'] = `Bearer ${token}`
+    return httpClient.delete(`admin/trivias/${id}`)
+}
