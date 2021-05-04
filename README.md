@@ -23,6 +23,9 @@ yarn workspace server add package-name
 ```
 
 ## 🏃‍♀️ How to run
+
+Run the API server and React server with a single command
+
 ```bash
 # With yarn
 yarn start
@@ -34,11 +37,13 @@ npm run start
 ```
 
 **Running server in production:**
+
 Install PM2
 
 ```bash
 npm install pm2 -g
 ```
+
 Start server daemon using included config file
 
 ```bash
