@@ -22,7 +22,7 @@ yarn workspace client add package-name
 yarn workspace server add package-name
 ```
 
-## How to run
+## 🏃‍♀️ How to run
 ```bash
 # With yarn
 yarn start
