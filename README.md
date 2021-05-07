@@ -1,4 +1,7 @@
 # TRIVIA!
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a4f6ad39-0d16-4185-8341-87645ad1eec5/deploy-status)](https://app.netlify.com/sites/apptrivia/deploys)
+
 Trivia app using Express + React + Socket.io + Yarn workspaces
 
 ## ✨ Features
