@@ -10,6 +10,7 @@ const NEXT_QUESTION = 'next-question'
 const PARTICIPANT_LEAVE = 'participant-leave'
 const ROOM_UPDATE = 'room-update'
 const UPDATE_SCORE = 'update-score'
+const PARTICIPANT_FINISH = 'participant-finish'
 
 export const socketEvents = {
     LOGIN,
@@ -24,4 +25,5 @@ export const socketEvents = {
     PARTICIPANT_LEAVE,
     ROOM_UPDATE,
     UPDATE_SCORE,
+    PARTICIPANT_FINISH,
 }

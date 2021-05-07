@@ -10,6 +10,7 @@ import { useRoomContext } from '../../context/room.context'
 import { JOIN_ROOM } from '../../providers/room.public.provider'
 import { loginToRoom, socket, subscribeToRoom, leaveRoom } from '../../socket'
 import genId from '../../utils/gen-id'
+import { getRandomColor } from '../../utils/random-color'
 
 const ParticipantForm = () => {
     const [name, setName] = useState('')
@@ -27,6 +28,7 @@ const ParticipantForm = () => {
             const participant = {
                 name,
                 id: genId(),
+                color: getRandomColor(),
             }
             dispatch({
                 type: roomContextActions.SET_PARTICIPANT,

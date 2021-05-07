@@ -1,25 +1,18 @@
 const colors = [
-    'gray',
-    'red',
-    'pink',
-    'grape',
-    'violet',
-    'indigo',
-    'blue',
-    'cyan',
-    'teal',
-    'green',
-    'lime',
-    'yellow',
-    'orange',
+    '#49505',
+    '#f03e',
+    '#d6336',
+    '#ae3ec9',
+    '#7048e8',
+    '#4263eb',
+    '#1c7ed',
+    '#1098a',
+    '#0ca67',
+    '#37b24d',
+    '#74b81',
+    '#f59f00',
+    '#f76707',
 ]
-
-export const getRandomColor = () => {
-    const color = getRandomItem(colors)
-    const variant = Math.floor(Math.random() * 9) + 1
-
-    return `var(--oc-${color}-${variant})`
-}
 
 /**
  * Get random item index
@@ -28,4 +21,12 @@ export const getRandomColor = () => {
  */
 const getRandomItem = (arr) => {
     return arr[(arr.length * Math.random()) | 0]
+}
+
+/**
+ * Return a random hex color code
+ * @returns {string}
+ */
+export const getRandomColor = () => {
+    return getRandomItem(colors)
 }

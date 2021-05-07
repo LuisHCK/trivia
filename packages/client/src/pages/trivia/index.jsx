@@ -1,10 +1,18 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { Badge, Button, Card, Col, Container, Row } from 'react-bootstrap'
+import {
+    Badge,
+    Button,
+    Card,
+    Col,
+    Container,
+    Row,
+    Spinner,
+} from 'react-bootstrap'
 import AdminNavbar from '../../components/admin-navbar'
 import UserCard from '../../components/user-card'
 import QuizProgressCard from '../../components/quiz-progress-card'
 import { BsPlayFill } from 'react-icons/bs'
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { withAuthenticationRequired } from '@auth0/auth0-react'
 import Loading from '../../components/loading'
 import AnimatedSpinner from '../../components/spinner'
@@ -14,6 +22,7 @@ import { CREATE_ROOM } from '../../providers/room.admin.provider'
 import './index.scss'
 import { adminLoginToRoom, socket, startTrivia } from '../../socket'
 import { socketEvents } from '../../constants'
+import ResultsTable from '../../components/results-table'
 
 const Trivia = () => {
     const { id } = useParams()
@@ -22,6 +31,9 @@ const Trivia = () => {
     const [participants, setParticipants] = useState([])
     const accessToken = useAccessToken()
     const [loggedIn, setloggedIn] = useState(false)
+    const [started, setStarted] = useState(false)
+    const [allFinished, setAllFinished] = useState(false)
+    const history = useHistory()
     const socketClient = socket
 
     const getTrivia = async () => {
@@ -36,6 +48,7 @@ const Trivia = () => {
 
     const handleStartTrivia = async () => {
         startTrivia(room.key)
+        setStarted(true)
     }
 
     /**
@@ -47,6 +60,10 @@ const Trivia = () => {
                 (prev, next) => parseFloat(prev.score) - parseFloat(next.score)
             )
             .reverse()
+    }
+
+    const returnToAdmin = () => {
+        history.replace('/admin')
     }
 
     useEffect(() => {
@@ -74,6 +91,33 @@ const Trivia = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [socketClient, room])
 
+    // When all participants finish display the results
+    useEffect(() => {
+        const finished =
+            !!participants.length &&
+            participants.every((p) => p.finished === true)
+
+        if (finished) {
+            setAllFinished(true)
+            console.log('ALL FINISHED')
+        }
+    }, [participants])
+
+    const startButton = (
+        <Button
+            disabled={!participants?.length || started}
+            onClick={handleStartTrivia}
+            variant="success"
+        >
+            {started ? 'Esperando resultados... ' : 'Iniciar'}
+            {started ? (
+                <Spinner animation="border" size="sm" />
+            ) : (
+                <BsPlayFill />
+            )}
+        </Button>
+    )
+
     return (
         <Fragment>
             <AdminNavbar />
@@ -86,14 +130,7 @@ const Trivia = () => {
                                 {room?.key?.toUpperCase() || 'Cargando...'}
                             </Badge>
                         </h1>
-                        <Button
-                            disabled={!participants?.length}
-                            onClick={handleStartTrivia}
-                            variant="success"
-                        >
-                            Iniciar
-                            <BsPlayFill />
-                        </Button>
+                        <div className="trivia-start-button">{startButton}</div>
                     </div>
 
                     <Row>
@@ -163,6 +200,12 @@ const Trivia = () => {
                     </Row>
                 </Container>
             </main>
+
+            <ResultsTable
+                isOpen={allFinished}
+                participants={getParticipants()}
+                onFinish={returnToAdmin}
+            />
         </Fragment>
     )
 }

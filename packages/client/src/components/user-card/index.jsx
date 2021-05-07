@@ -2,7 +2,6 @@ import React from 'react'
 import { Badge, Card } from 'react-bootstrap'
 import { RiVipCrownFill } from 'react-icons/ri'
 import { IoMdMedal } from 'react-icons/io'
-import { getRandomColor } from '../../utils/random-color'
 
 const UserCard = ({
     position,
@@ -12,7 +11,6 @@ const UserCard = ({
     hideScore,
     children,
 }) => {
-    const backgroundColor = getRandomColor()
     const renderMedal = () => {
         switch (position) {
             case 0:
@@ -45,7 +43,10 @@ const UserCard = ({
         <Card className={`mb-2 ${className}`} bg="light" text="dark">
             <Card.Body>
                 <div className="d-flex align-items-center">
-                    <div className="avatar" style={{ backgroundColor }}>
+                    <div
+                        className="avatar"
+                        style={{ backgroundColor: user?.color }}
+                    >
                         <span>{user?.name?.split('')[0]}</span>
                         {!!score && renderMedal()}
                     </div>

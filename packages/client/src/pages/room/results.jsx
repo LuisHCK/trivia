@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button, Container } from 'react-bootstrap'
 import { Bar } from 'react-chartjs-2'
+import { socketEvents } from '../../constants'
 import { useRoomContext } from '../../context/room.context'
+import { socket } from '../../socket'
 
 const Results = () => {
     const { state } = useRoomContext()
@@ -53,10 +55,14 @@ const Results = () => {
                 borderWidth: 1,
                 borderRadius: 15,
                 borderSkipped: false,
-                backgroundColor: ['#FFC107', '#C0C0C0', '#cd7f32'],
+                backgroundColor: participants.map((p) => p.color),
             },
         ],
     }
+
+    useEffect(() => {
+        socket.emit(socketEvents.PARTICIPANT_FINISH)
+    }, [])
 
     return (
         <Container>

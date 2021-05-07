@@ -91,6 +91,14 @@ const startSocketServer = (io) => {
                 )
             }
         })
+
+        socket.on(socketEvents.PARTICIPANT_FINISH, async () => {
+            socket.participant.finished = true
+            io.in(socket.room).emit(
+                socketEvents.ROOM_UPDATE,
+                await getParticipants(socket.room)
+            )
+        })
     })
 }
 
