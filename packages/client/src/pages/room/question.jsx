@@ -4,9 +4,10 @@ import { useHistory, useParams } from 'react-router'
 import { useRoomContext } from '../../context/room.context'
 import percentage from '../../utils/percentage'
 import shuffleArray from '../../utils/shuffleArray'
-import { socket } from '../../socket'
+import { loginToRoom, socket } from '../../socket'
 import { socketEvents } from '../../constants'
 import { roomContextActions } from '../../constants/context-actions'
+import { sfxCountdownClock } from '../../utils/sound-effects'
 
 const Question = () => {
     const { id, questionId } = useParams()
@@ -69,6 +70,12 @@ const Question = () => {
         if (responseNumber === 1) {
             const score = (progress * 100) / 100
             socket.emit(socketEvents.UPDATE_SCORE, score)
+
+            // Update participant score
+            dispatch({
+                type: roomContextActions.SET_PARTICIPANT,
+                payload: { ...state.participant, score },
+            })
         }
     }
 
@@ -129,6 +136,10 @@ const Question = () => {
                 type: roomContextActions.SET_PARTICIPANTS,
                 payload: data,
             })
+        })
+
+        socket.on(socketEvents.RECONNECT, () => {
+            loginToRoom(id, state.participant)
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [socket])
