@@ -11,7 +11,7 @@ Trivia app using Express + React + Socket.io + Yarn workspaces
 - Pretty fun!
 
 ## 🚀 Yarn workspaces
-[Yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces/) is an awesome feature, it's easy to keep everithing together.
+[Yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces/) is an awesome feature, it's easy to keep everything together.
 
 **Install NPM packages**
 
