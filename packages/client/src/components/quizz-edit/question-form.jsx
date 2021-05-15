@@ -162,7 +162,7 @@ const QuestionForm = ({ position, question }) => {
                         <Form.Label>Foto</Form.Label>
 
                         <div className="text-center mb-2 admin-photo-container">
-                            {!uploadingPhoto && (
+                            {!uploadingPhoto && question.photo && (
                                 <Image
                                     src={
                                         'http://localhost:4000/' +

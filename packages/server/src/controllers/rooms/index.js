@@ -37,9 +37,9 @@ const joinRoom = async (req, res) => {
     const { key } = req.params
     const roomInstance = await Model.findOne({ key: key.toLowerCase() }).exec()
     if (roomInstance) {
-        const triviaInstance = await Trivia.findById(
-            roomInstance.triviaId
-        ).exec()
+        const triviaInstance = await Trivia.findById(roomInstance.triviaId)
+            .populate({ path: 'questions.photo', model: 'Photo' })
+            .exec()
         return res.json({ room: roomInstance, trivia: triviaInstance })
     }
 

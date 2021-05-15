@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Col, Container, Row, ProgressBar } from 'react-bootstrap'
+import {
+    Button,
+    Col,
+    Container,
+    Row,
+    ProgressBar,
+    Image,
+} from 'react-bootstrap'
 import { useHistory, useParams } from 'react-router'
 import { useRoomContext } from '../../context/room.context'
 import percentage from '../../utils/percentage'
@@ -7,7 +14,8 @@ import shuffleArray from '../../utils/shuffleArray'
 import { loginToRoom, socket } from '../../socket'
 import { socketEvents } from '../../constants'
 import { roomContextActions } from '../../constants/context-actions'
-import { sfxCountdownClock } from '../../utils/sound-effects'
+import { sfxFourSeconds, sfxError, sfxSuccess } from '../../utils/sound-effects'
+import getPhotoPath from '../../utils/getPhotoPath'
 
 const Question = () => {
     const { id, questionId } = useParams()
@@ -22,6 +30,10 @@ const Question = () => {
     )
 
     const getResponseState = (responseNumber) => {
+        if (selectedReponse === -1 && responseNumber !== 1) {
+            return 'danger'
+        }
+
         if (selectedReponse === responseNumber && responseNumber === 1) {
             return 'success'
         }
@@ -76,6 +88,10 @@ const Question = () => {
                 type: roomContextActions.SET_PARTICIPANT,
                 payload: { ...state.participant, score },
             })
+
+            sfxSuccess.play()
+        } else {
+            sfxError.play()
         }
     }
 
@@ -115,9 +131,13 @@ const Question = () => {
 
         if (seconds <= 0) {
             setTimeout(() => {
+                if (!selectedReponse) handleResponse(-1)
+            }, 1000)
+
+            setTimeout(() => {
                 goToNextQuestion()
                 setSelectedReponse()
-            }, 2000)
+            }, 3000)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [seconds])
@@ -129,6 +149,12 @@ const Question = () => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [questionId, state])
+
+    useEffect(() => {
+        if (seconds === 4) {
+            sfxFourSeconds.play()
+        }
+    }, [seconds])
 
     useEffect(() => {
         socket.on(socketEvents.ROOM_UPDATE, (data) => {
@@ -147,8 +173,17 @@ const Question = () => {
     return (
         <Container>
             <div className="question-page">
-                <div className="question-area">
-                    <h1>{currentQuestion?.title}</h1>
+                <div className="question-area text-center">
+                    <h5>{currentQuestion?.title}</h5>
+                </div>
+
+                <div className="question-photo pb-4">
+                    {currentQuestion?.photo?.path && (
+                        <Image
+                            src={getPhotoPath(currentQuestion.photo.path)}
+                            alt={currentQuestion?.title}
+                        />
+                    )}
                 </div>
 
                 <div className="w-100 mb-4">
