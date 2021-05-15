@@ -4,6 +4,7 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { Auth0Provider } from '@auth0/auth0-react'
 import './index.scss'
+import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 
 ReactDOM.render(
     <Auth0Provider
@@ -17,6 +18,8 @@ ReactDOM.render(
     </Auth0Provider>,
     document.getElementById('root')
 )
+
+console.log(serviceWorkerRegistration.register())
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
