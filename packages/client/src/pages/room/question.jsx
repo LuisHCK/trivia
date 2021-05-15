@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Col, Container, Row, ProgressBar } from 'react-bootstrap'
+import {
+    Button,
+    Col,
+    Container,
+    Row,
+    ProgressBar,
+    Image,
+} from 'react-bootstrap'
 import { useHistory, useParams } from 'react-router'
 import { useRoomContext } from '../../context/room.context'
 import percentage from '../../utils/percentage'
 import shuffleArray from '../../utils/shuffleArray'
-import { socket } from '../../socket'
+import { loginToRoom, socket } from '../../socket'
 import { socketEvents } from '../../constants'
 import { roomContextActions } from '../../constants/context-actions'
+import { sfxFourSeconds, sfxError, sfxSuccess } from '../../utils/sound-effects'
+import getPhotoPath from '../../utils/getPhotoPath'
 
 const Question = () => {
     const { id, questionId } = useParams()
@@ -21,6 +30,10 @@ const Question = () => {
     )
 
     const getResponseState = (responseNumber) => {
+        if (selectedReponse === -1 && responseNumber !== 1) {
+            return 'danger'
+        }
+
         if (selectedReponse === responseNumber && responseNumber === 1) {
             return 'success'
         }
@@ -69,6 +82,16 @@ const Question = () => {
         if (responseNumber === 1) {
             const score = (progress * 100) / 100
             socket.emit(socketEvents.UPDATE_SCORE, score)
+
+            // Update participant score
+            dispatch({
+                type: roomContextActions.SET_PARTICIPANT,
+                payload: { ...state.participant, score },
+            })
+
+            sfxSuccess.play()
+        } else {
+            sfxError.play()
         }
     }
 
@@ -108,9 +131,13 @@ const Question = () => {
 
         if (seconds <= 0) {
             setTimeout(() => {
+                if (!selectedReponse) handleResponse(-1)
+            }, 1000)
+
+            setTimeout(() => {
                 goToNextQuestion()
                 setSelectedReponse()
-            }, 2000)
+            }, 3000)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [seconds])
@@ -124,11 +151,21 @@ const Question = () => {
     }, [questionId, state])
 
     useEffect(() => {
+        if (seconds === 4) {
+            sfxFourSeconds.play()
+        }
+    }, [seconds])
+
+    useEffect(() => {
         socket.on(socketEvents.ROOM_UPDATE, (data) => {
             dispatch({
                 type: roomContextActions.SET_PARTICIPANTS,
                 payload: data,
             })
+        })
+
+        socket.on(socketEvents.RECONNECT, () => {
+            loginToRoom(id, state.participant)
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [socket])
@@ -136,8 +173,17 @@ const Question = () => {
     return (
         <Container>
             <div className="question-page">
-                <div className="question-area">
-                    <h1>{currentQuestion?.title}</h1>
+                <div className="question-area text-center">
+                    <h5>{currentQuestion?.title}</h5>
+                </div>
+
+                <div className="question-photo pb-4">
+                    {currentQuestion?.photo?.path && (
+                        <Image
+                            src={getPhotoPath(currentQuestion.photo.path)}
+                            alt={currentQuestion?.title}
+                        />
+                    )}
                 </div>
 
                 <div className="w-100 mb-4">

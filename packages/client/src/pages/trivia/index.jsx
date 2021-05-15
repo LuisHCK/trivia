@@ -86,6 +86,10 @@ const Trivia = () => {
                 setParticipants(data)
             })
 
+            socketClient.on(socketEvents.RECONNECT, (e) => {
+                console.log('CONNECTED!!!')
+            })
+
             setloggedIn(true)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -99,9 +103,13 @@ const Trivia = () => {
 
         if (finished) {
             setAllFinished(true)
-            console.log('ALL FINISHED')
         }
-    }, [participants])
+
+        if (!participants.length && started) {
+            setStarted(false)
+            setAllFinished(false)
+        }
+    }, [participants, started])
 
     const startButton = (
         <Button

@@ -75,12 +75,22 @@
         font-size: 1.5rem;
     }
 
-    .chart-container{
+    .chart-container {
         width: 100%;
         height: 350px;
 
         canvas {
             height: 350px;
+        }
+    }
+
+    .question-photo {
+        @media only screen and (max-width: 768px) {
+            img {
+                width: 260px;
+                max-width: 100%;
+                height: auto;
+            }
         }
     }
 }

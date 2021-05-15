@@ -7,6 +7,9 @@ import { socketEvents } from '../constants'
  */
 export const socket = io(process.env.REACT_APP_SERVER_URL, {
     transports: ['websocket'],
+    reconnection: true,
+    reconnectionDelay: 1000,
+    reconnectionDelayMax: 5000,
 })
 /**
  * Login to room socket

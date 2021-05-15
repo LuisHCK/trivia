@@ -8,7 +8,9 @@ import { getUserFromReq } from '../../utils/userHandler'
  */
 const list = async (req, res) => {
     const user = getUserFromReq(req)
-    const trivias = await Model.find({ userId: user.sub }).exec()
+    const trivias = await Model.find({ userId: user.sub })
+        .populate({ path: 'questions.photo', model: 'Photo' })
+        .exec()
     res.json(trivias)
 }
 
@@ -23,6 +25,7 @@ const create = async (req, res) => {
 
     try {
         const trivia = await Model.create({ ...body, userId: user.sub })
+        trivia.populate({ path: 'questions.photo', model: 'Photo' })
         res.json(trivia)
     } catch (err) {
         res.status(422).json(err)
@@ -37,7 +40,9 @@ const create = async (req, res) => {
 const show = async (req, res) => {
     const user = getUserFromReq(req)
     const { id } = req.params
-    const trivia = await Model.findOne({ _id: id, userId: user.sub })
+    const trivia = await (
+        await Model.findOne({ _id: id, userId: user.sub })
+    ).populate({ path: 'questions.photo', model: 'Photo' })
 
     if (trivia) {
         res.json(trivia)
@@ -55,6 +60,7 @@ const update = async (req, res) => {
         body,
         { new: true }
     )
+    trivia.populate({ path: 'questions.photo', model: 'Photo' })
     res.json(trivia)
 }
 

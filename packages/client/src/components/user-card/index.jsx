@@ -39,6 +39,8 @@ const UserCard = ({
         }
     }
 
+    console.log(user)
+
     return (
         <Card className={`mb-2 ${className}`} bg="light" text="dark">
             <Card.Body>

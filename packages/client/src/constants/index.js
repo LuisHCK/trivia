@@ -1,5 +1,7 @@
 const LOGIN = 'login'
 const CONNECTION = 'connection'
+const DISCONNECT = 'disconnect'
+const RECONNECT = 'reconnect'
 const SEND_MESSAGE = 'send-message'
 const MESSAGE = 'message'
 const JOIN = 'join'
@@ -15,6 +17,8 @@ const PARTICIPANT_FINISH = 'participant-finish'
 export const socketEvents = {
     LOGIN,
     CONNECTION,
+    RECONNECT,
+    DISCONNECT,
     SEND_MESSAGE,
     MESSAGE,
     JOIN,

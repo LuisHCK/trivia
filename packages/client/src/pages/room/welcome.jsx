@@ -131,6 +131,10 @@ const Welcome = () => {
             socketClient.on(socketEvents.START_TRIVIA, () => {
                 dispatch({ type: roomContextActions.SET_TRIVIA_STARTED })
             })
+
+            socket.on(socketEvents.ADMIN_JOIN, () => {
+                loginToRoom(id, state.participant)
+            })
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [socketClient])
