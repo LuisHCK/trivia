@@ -1,5 +1,5 @@
-import React from 'react'
-import { Button, Card, Col, Form } from 'react-bootstrap'
+import React, { useState } from 'react'
+import { Button, Card, Col, Form, Image, Spinner } from 'react-bootstrap'
 import { BsTrash } from 'react-icons/bs'
 import {
     UPDATE_QUESTION,
@@ -7,11 +7,15 @@ import {
     useQuestionForm,
     SET_ACTIVE_ITEM,
 } from '../../context/question-form-context'
+import useAccessToken from '../../hooks/useAccessToken'
+import { UPLOAD_PHOTO } from '../../providers/room.admin.provider'
 
 let debouncer
 
 const QuestionForm = ({ position, question }) => {
     const { state, dispatch } = useQuestionForm()
+    const accessToken = useAccessToken()
+    const [uploadingPhoto, setUploadingPhoto] = useState(false)
 
     const handleInputChange = ({ target: { name, value } }) => {
         clearTimeout(debouncer)
@@ -43,6 +47,32 @@ const QuestionForm = ({ position, question }) => {
                 payload: { question, index: position - 1 },
             })
         }, 500)
+    }
+
+    const handlePhoto = async (event) => {
+        setUploadingPhoto(true)
+
+        try {
+            const formData = new FormData()
+            formData.append('photo', event.target.files[0])
+            const { data } = await UPLOAD_PHOTO(formData, accessToken)
+
+            dispatch({
+                type: UPDATE_QUESTION,
+                payload: {
+                    question: {
+                        ...question,
+                        photo: data,
+                    },
+                    index: position - 1,
+                },
+            })
+
+            setUploadingPhoto(false)
+        } catch (error) {
+            console.error(error)
+            setUploadingPhoto(false)
+        }
     }
 
     return (
@@ -126,6 +156,42 @@ const QuestionForm = ({ position, question }) => {
                         <Form.Control.Feedback type="invalid">
                             Este campo es requerido
                         </Form.Control.Feedback>
+                    </Form.Group>
+
+                    <Form.Group as={Col} md={12} sm={15}>
+                        <Form.Label>Foto</Form.Label>
+
+                        <div className="text-center mb-2 admin-photo-container">
+                            {!uploadingPhoto && (
+                                <Image
+                                    src={
+                                        'http://localhost:4000/' +
+                                        question.photo?.path
+                                    }
+                                    thumbnail
+                                />
+                            )}
+
+                            {uploadingPhoto && (
+                                <>
+                                    <Spinner
+                                        animation="border"
+                                        variant="info"
+                                    />
+                                    <div>
+                                        <span>Subiendo foto...</span>
+                                    </div>
+                                </>
+                            )}
+                        </div>
+
+                        <Form.File
+                            id={`position-${position}-photo`}
+                            label="Selecciona una foto"
+                            onChange={handlePhoto}
+                            data-browse="Seleccionar"
+                            custom
+                        />
                     </Form.Group>
 
                     {state.questions?.length > 1 && (

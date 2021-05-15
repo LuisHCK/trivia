@@ -9,6 +9,7 @@ import cors from 'cors'
 import { checkJwt } from './middlewares/auth0'
 import pulbicRouter from './routes/public'
 import startSocketServer from './socket'
+import fileUpload from 'express-fileupload'
 
 const app = express()
 const server = http.createServer(app)
@@ -26,6 +27,16 @@ const corsOptions = {
 // Body parser
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(
+    fileUpload({
+        createParentPath: true,
+    })
+)
+
+// Serve static files
+app.use('/uploads', express.static('uploads'))
+
+console.log()
 
 app.use(cors(corsOptions))
 

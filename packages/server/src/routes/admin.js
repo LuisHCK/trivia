@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import triviaController from '../controllers/trivias'
 import roomController from '../controllers/rooms'
+import photosController from '../controllers/photos'
 
 const adminRoute = Router()
 
@@ -13,5 +14,8 @@ adminRoute.delete('/trivias/:id', triviaController.destroy)
 
 // Rooms
 adminRoute.post('/rooms', roomController.create)
+
+// Photos
+adminRoute.post('/photos', photosController.create)
 
 export default adminRoute

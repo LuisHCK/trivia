@@ -41,6 +41,10 @@ const TriviaSchema = new mongoose.Schema({
                 type: String,
                 required: true,
             },
+            photo: {
+                type: mongoose.SchemaTypes.ObjectId,
+                ref: 'Photo',
+            },
         },
     ],
     userId: {

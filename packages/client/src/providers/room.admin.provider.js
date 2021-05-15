@@ -9,3 +9,8 @@ export const GET_ROOM = (id, token) => {
     httpClient.defaults.headers.common['Authorization'] = `Bearer ${token}`
     return httpClient.get(`admin/rooms/${id}`)
 }
+
+export const UPLOAD_PHOTO = (photo, token) => {
+    httpClient.defaults.headers.common['Authorization'] = `Bearer ${token}`
+    return httpClient.post('admin/photos', photo)
+}
