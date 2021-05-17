@@ -9,6 +9,7 @@ import {
 } from '../../context/question-form-context'
 import useAccessToken from '../../hooks/useAccessToken'
 import { UPLOAD_PHOTO } from '../../providers/room.admin.provider'
+import getPhotoPath from '../../utils/getPhotoPath'
 
 let debouncer
 
@@ -164,10 +165,7 @@ const QuestionForm = ({ position, question }) => {
                         <div className="text-center mb-2 admin-photo-container">
                             {!uploadingPhoto && question.photo && (
                                 <Image
-                                    src={
-                                        'http://localhost:4000/' +
-                                        question.photo?.path
-                                    }
+                                    src={getPhotoPath(question.photo?.path)}
                                     thumbnail
                                 />
                             )}
