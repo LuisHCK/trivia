@@ -2,7 +2,20 @@
     "name": "TRIVIA!",
     "short_name": "Crea, aprende y juega",
     "description": "Una aplicación de trivia online",
+    "theme_color": "#7e57c2",
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "start_url": "./",
+    "categories": ["education", "fun"],
+    "lang": "es",
+    "orientation": "any",
+    "scope": "",
     "icons": [
+        {
+            "src": "icons/android-icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
         {
             "src": "icons/android-chrome-192x192.png",
             "sizes": "192x192",
@@ -12,10 +25,54 @@
             "src": "icons/android-chrome-256x256.png",
             "sizes": "256x256",
             "type": "image/png"
+        },
+        {
+            "src": "icons/maskable_icon.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
         }
     ],
-    "theme_color": "#ffffff",
-    "background_color": "#ffffff",
-    "display": "standalone",
-    "start_url": "./"
+    "screenshots": [
+        {
+            "src": "screenshots/screenshots_1.jpg",
+            "sizes": "480x853",
+            "type": "image/jpg"
+        },
+        {
+            "src": "screenshots/screenshots_2.jpg",
+            "sizes": "480x853",
+            "type": "image/jpg"
+        },
+        {
+            "src": "screenshots/screenshots_3.jpg",
+            "sizes": "480x853",
+            "type": "image/jpg"
+        },
+        {
+            "src": "screenshots/screenshots_4.jpg",
+            "sizes": "480x853",
+            "type": "image/jpg"
+        },
+        {
+            "src": "screenshots/screenshots_5.jpg",
+            "sizes": "480x853",
+            "type": "image/jpg"
+        },
+        {
+            "src": "screenshots/screenshots_6.jpg",
+            "sizes": "480x853",
+            "type": "image/jpg"
+        },
+        {
+            "src": "screenshots/screenshots_7.jpg",
+            "sizes": "480x853",
+            "type": "image/jpg"
+        },
+        {
+            "src": "screenshots/screenshots_8.jpg",
+            "sizes": "480x853",
+            "type": "image/jpg"
+        }
+    ]
 }
