@@ -43,7 +43,7 @@ const AuthPopup = ({ isOpen }) => {
     }
 
     return (
-        <Modal centered show={isOpen}>
+        <Modal centered show={isOpen} onHide={() => {}}>
             <Modal.Header className="text-center">
                 <Modal.Title>Iniciar Sesión</Modal.Title>
             </Modal.Header>

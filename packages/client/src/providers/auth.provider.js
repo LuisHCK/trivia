@@ -30,5 +30,5 @@ export const IS_AUTHENTICATED = () => {
  * Removes stored JWToken
  */
 export const REMOVE_TOKEN = () => {
-    Cookies.set('authorization', undefined)
+    Cookies.set('authorization', '')
 }
