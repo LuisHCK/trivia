@@ -4,6 +4,7 @@ import Admin from '../pages/admin'
 import Landing from '../pages/landing'
 import Room from '../pages/room'
 import Trivia from '../pages/trivia'
+import PrivateRoute from './private-route'
 
 const AppRouter = () => {
     return (
@@ -12,13 +13,14 @@ const AppRouter = () => {
                 <Route path="/" exact>
                     <Landing />
                 </Route>
-                <Route path="/admin" exact>
-                    <Admin />
-                </Route>
 
-                <Route path="/admin/trivia/:id" exact>
-                    <Trivia />
-                </Route>
+                <PrivateRoute component={Admin} path="/admin" exact />
+
+                <PrivateRoute
+                    component={Trivia}
+                    path="/admin/trivia/:id"
+                    exact
+                />
 
                 <Route path="/room/:id">
                     <Room />
