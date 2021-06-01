@@ -36,8 +36,6 @@ app.use(
 // Serve static files
 app.use('/uploads', express.static('uploads'))
 
-console.log()
-
 app.use(cors(corsOptions))
 
 // Routing

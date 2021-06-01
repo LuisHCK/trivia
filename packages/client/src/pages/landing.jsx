@@ -3,7 +3,7 @@ import { Button, FormControl, InputGroup, Modal } from 'react-bootstrap'
 import { APP_TITLE } from '../providers/app.provider'
 import { useHistory } from 'react-router-dom'
 import AuthPopup from '../components/auth-popup'
-import Cookies from 'js-cookie'
+import { IS_AUTHENTICATED } from '../providers/auth.provider'
 
 const Landing = () => {
     const [showModal, setShowModal] = useState(false)
@@ -28,9 +28,7 @@ const Landing = () => {
     }
 
     const handleSignIn = () => {
-        const isSignedIn = !!Cookies.get('authorization')
-
-        if (isSignedIn) {
+        if (IS_AUTHENTICATED()) {
             history.push('/admin')
         } else {
             setShowLoginModal(true)

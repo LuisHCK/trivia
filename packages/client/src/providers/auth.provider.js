@@ -17,3 +17,18 @@ export const SAVE_TOKEN = (token) => {
     Cookies.set('authorization', token)
     httpClient.defaults.headers.common['Authorization'] = `Bearer ${token}`
 }
+
+/**
+ * Check if token exists
+ * @returns {boolean}
+ */
+export const IS_AUTHENTICATED = () => {
+    return !!Cookies.get('authorization')
+}
+
+/**
+ * Removes stored JWToken
+ */
+export const REMOVE_TOKEN = () => {
+    Cookies.set('authorization', undefined)
+}

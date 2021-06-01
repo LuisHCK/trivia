@@ -2,13 +2,13 @@ import React from 'react'
 import { Button, Nav, Navbar } from 'react-bootstrap'
 import { Link, useHistory } from 'react-router-dom'
 import { APP_TITLE } from '../../providers/app.provider'
-import Cookies from 'js-cookie'
+import { REMOVE_TOKEN } from '../../providers/auth.provider'
 
 const AdminNavbar = () => {
     const history = useHistory()
 
     const handleLogout = () => {
-        Cookies.set('authorization', undefined)
+        REMOVE_TOKEN()
         history.push('/')
     }
 
