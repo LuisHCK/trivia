@@ -5,9 +5,10 @@ const PhotoSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    userId: {
-        type: String,
-        required: true,
+    user: {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'User',
+        default: '',
     },
 })
 

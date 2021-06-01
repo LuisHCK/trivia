@@ -13,8 +13,6 @@ import UserCard from '../../components/user-card'
 import QuizProgressCard from '../../components/quiz-progress-card'
 import { BsPlayFill } from 'react-icons/bs'
 import { useHistory, useParams } from 'react-router-dom'
-import { withAuthenticationRequired } from '@auth0/auth0-react'
-import Loading from '../../components/loading'
 import AnimatedSpinner from '../../components/spinner'
 import { GET_TRIVIA_BY_ID } from '../../providers/trivia.admin.provider'
 import { CREATE_ROOM } from '../../providers/room.admin.provider'
@@ -214,6 +212,4 @@ const Trivia = () => {
     )
 }
 
-export default withAuthenticationRequired(Trivia, {
-    onRedirecting: () => <Loading />,
-})
+export default Trivia

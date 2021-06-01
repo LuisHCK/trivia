@@ -47,9 +47,10 @@ const TriviaSchema = new mongoose.Schema({
             },
         },
     ],
-    userId: {
-        type: String,
-        requierd: true,
+    user: {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'User',
+        required: true
     },
     createdAt: {
         type: String,

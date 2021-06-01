@@ -26,7 +26,7 @@ export const create = async (req, res) => {
 
         const photoInstance = await PhotoModel.create({
             path: filePath,
-            userId: user.sub,
+            user: user.id,
         })
 
         res.status(201).json(photoInstance)
