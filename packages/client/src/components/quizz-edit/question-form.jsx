@@ -7,7 +7,7 @@ import {
     useQuestionForm,
     SET_ACTIVE_ITEM,
 } from '../../context/question-form-context'
-import useAccessToken from '../../hooks/useAccessToken'
+import useAccessToken from '../../hooks/useAuthenticated'
 import { UPLOAD_PHOTO } from '../../providers/room.admin.provider'
 import getPhotoPath from '../../utils/getPhotoPath'
 

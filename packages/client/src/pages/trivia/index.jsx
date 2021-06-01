@@ -16,7 +16,6 @@ import { useHistory, useParams } from 'react-router-dom'
 import { withAuthenticationRequired } from '@auth0/auth0-react'
 import Loading from '../../components/loading'
 import AnimatedSpinner from '../../components/spinner'
-import useAccessToken from '../../hooks/useAccessToken'
 import { GET_TRIVIA_BY_ID } from '../../providers/trivia.admin.provider'
 import { CREATE_ROOM } from '../../providers/room.admin.provider'
 import './index.scss'
@@ -29,7 +28,6 @@ const Trivia = () => {
     const [trivia, setTrivia] = useState()
     const [room, setRoom] = useState()
     const [participants, setParticipants] = useState([])
-    const accessToken = useAccessToken()
     const [loggedIn, setloggedIn] = useState(false)
     const [started, setStarted] = useState(false)
     const [allFinished, setAllFinished] = useState(false)
@@ -37,12 +35,12 @@ const Trivia = () => {
     const socketClient = socket
 
     const getTrivia = async () => {
-        const { data } = await GET_TRIVIA_BY_ID(id, accessToken)
+        const { data } = await GET_TRIVIA_BY_ID(id)
         setTrivia(data)
     }
 
     const createRoom = async () => {
-        const { data } = await CREATE_ROOM({ triviaId: id }, accessToken)
+        const { data } = await CREATE_ROOM({ triviaId: id })
         setRoom(data)
     }
 
@@ -67,12 +65,10 @@ const Trivia = () => {
     }
 
     useEffect(() => {
-        if (accessToken) {
-            getTrivia()
-            createRoom()
-        }
+        getTrivia()
+        createRoom()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [accessToken])
+    }, [])
 
     useEffect(() => {
         if (socketClient && room?._id && !loggedIn) {

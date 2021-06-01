@@ -12,11 +12,9 @@ import {
     DELETE_TRIVIA,
 } from '../providers/trivia.admin.provider'
 import Loading from '../components/loading'
-import useAccessToken from '../hooks/useAccessToken'
 
 const Admin = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false)
-    const accessToken = useAccessToken()
     const [trivias, setTrivias] = useState()
     const [isLoading, setIsLoading] = useState(true)
 
@@ -24,26 +22,32 @@ const Admin = () => {
 
     const getTrivias = async () => {
         setIsLoading(true)
-        const { data } = await GET_ALL_TRIVIAS(accessToken)
-        setTrivias(data)
-        setIsLoading(false)
+
+        try {
+            const { data } = await GET_ALL_TRIVIAS()
+            setTrivias(data)
+            setIsLoading(false)
+        } catch (error) {
+            setIsLoading(false)
+            console.error(error)
+        }
     }
 
     const handleTriviaSubmit = async (trivia) => {
         toggleModal()
 
         if (trivia._id) {
-            await UPDATE_TRIVIA(trivia._id, trivia, accessToken)
+            await UPDATE_TRIVIA(trivia._id, trivia)
             getTrivias()
         } else {
-            await CREATE_TRIVIA(trivia, accessToken)
+            await CREATE_TRIVIA(trivia)
             getTrivias()
         }
     }
 
     const handleDelete = async (trivia) => {
         try {
-            await DELETE_TRIVIA(trivia._id, accessToken)
+            await DELETE_TRIVIA(trivia._id)
             getTrivias()
         } catch (error) {
             console.log(error)
@@ -61,11 +65,8 @@ const Admin = () => {
         ))
 
     useEffect(() => {
-        if (accessToken) {
-            getTrivias()
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [accessToken])
+        getTrivias()
+    }, [])
 
     return (
         <QuestionFormProvider>

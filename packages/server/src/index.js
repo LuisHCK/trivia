@@ -6,10 +6,10 @@ import socketIO from 'socket.io'
 import './database'
 import adminRoute from './routes/admin'
 import cors from 'cors'
-import { checkJwt } from './middlewares/auth0'
-import pulbicRouter from './routes/public'
+import publicRouter from './routes/public'
 import startSocketServer from './socket'
 import fileUpload from 'express-fileupload'
+import authRequired from './middlewares/auth'
 
 const app = express()
 const server = http.createServer(app)
@@ -41,10 +41,11 @@ console.log()
 app.use(cors(corsOptions))
 
 // Routing
-app.use('/api/admin', checkJwt, adminRoute)
-app.use('/api/public', pulbicRouter)
+app.use('/api/admin', authRequired, adminRoute)
+app.use('/api/public', publicRouter)
 
 server.listen(port, () => {
+    console.clear()
     console.log(
         `[${chalk.bold(
             'INFO'

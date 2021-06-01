@@ -1,16 +1,15 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import { Button, FormControl, InputGroup, Modal } from 'react-bootstrap'
 import { APP_TITLE } from '../providers/app.provider'
-import { useAuth0 } from '@auth0/auth0-react'
 import { useHistory } from 'react-router-dom'
-import useQuery from '../hooks/useQuery'
+import AuthPopup from '../components/auth-popup'
+import Cookies from 'js-cookie'
 
 const Landing = () => {
     const [showModal, setShowModal] = useState(false)
+    const [showLoginModal, setShowLoginModal] = useState(false)
     const [roomKey, setRoomKey] = useState('')
-    const { loginWithRedirect, isAuthenticated } = useAuth0()
     const history = useHistory()
-    const queryParams = useQuery()
 
     const toggleModal = () => setShowModal((prev) => !prev)
 
@@ -28,12 +27,15 @@ const Landing = () => {
         }
     }
 
-    useEffect(() => {
-        if (isAuthenticated && queryParams.noredirect !== 'true') {
+    const handleSignIn = () => {
+        const isSignedIn = !!Cookies.get('authorization')
+
+        if (isSignedIn) {
             history.push('/admin')
+        } else {
+            setShowLoginModal(true)
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isAuthenticated, queryParams])
+    }
 
     return (
         <Fragment>
@@ -53,14 +55,7 @@ const Landing = () => {
                             </Button>
                         </div>
                         <div className="button-container">
-                            <Button
-                                onClick={() =>
-                                    loginWithRedirect({
-                                        redirectUri: window.location.origin,
-                                    })
-                                }
-                                block
-                            >
+                            <Button onClick={handleSignIn} block>
                                 Crear una Trivia
                             </Button>
                         </div>
@@ -100,6 +95,8 @@ const Landing = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
+
+            <AuthPopup isOpen={showLoginModal} />
         </Fragment>
     )
 }
