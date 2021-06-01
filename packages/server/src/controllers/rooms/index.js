@@ -1,4 +1,5 @@
 import Model from '../../models/room'
+import PhotoModel from '../../models/photo'
 import Trivia from '../../models/trivia'
 import { getUserFromReq } from '../../utils/userHandler'
 import genId from '../../utils/genId'
@@ -23,7 +24,7 @@ const create = async (req, res) => {
 
         const newRoom = await Model.create({
             triviaId: body.triviaId,
-            userId: user.sub,
+            user: user.id,
             key: genId(6),
         })
         res.status(201).json(newRoom)
@@ -38,7 +39,7 @@ const joinRoom = async (req, res) => {
     const roomInstance = await Model.findOne({ key: key.toLowerCase() }).exec()
     if (roomInstance) {
         const triviaInstance = await Trivia.findById(roomInstance.triviaId)
-            .populate({ path: 'questions.photo', model: 'Photo' })
+            .populate({ path: 'questions.photo', model: PhotoModel })
             .exec()
         return res.json({ room: roomInstance, trivia: triviaInstance })
     }

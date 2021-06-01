@@ -10,6 +10,7 @@
         "start": "nodemon --watch src --exec babel-node src/index.js"
     },
     "dependencies": {
+        "bcrypt": "^5.0.1",
         "chalk": "^4.1.0",
         "cors": "^2.8.5",
         "dotenv": "^8.2.0",
@@ -18,6 +19,7 @@
         "express-jwt": "^6.0.0",
         "express-jwt-authz": "^2.4.1",
         "joi": "^17.4.0",
+        "jsonwebtoken": "^8.5.1",
         "jwks-rsa": "^2.0.2",
         "mongoose": "^5.12.4",
         "sharp": "^0.28.2",

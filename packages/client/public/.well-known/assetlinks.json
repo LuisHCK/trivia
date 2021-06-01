@@ -1,0 +1,12 @@
+[
+    {
+        "relation": ["delegate_permission/common.handle_all_urls"],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "app.netlify.apptrivia.twa",
+            "sha256_cert_fingerprints": [
+                "CF:FA:E0:34:15:38:CB:40:2F:4C:3D:9E:0A:27:1B:04:42:CC:D5:6E:1A:9A:06:56:DD:D9:E7:71:46:91:4A:21"
+            ]
+        }
+    }
+]

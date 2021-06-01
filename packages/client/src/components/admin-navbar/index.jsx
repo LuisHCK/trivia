@@ -1,14 +1,15 @@
 import React from 'react'
-import { Nav, Navbar } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Button, Nav, Navbar } from 'react-bootstrap'
+import { Link, useHistory } from 'react-router-dom'
 import { APP_TITLE } from '../../providers/app.provider'
-import { useAuth0 } from '@auth0/auth0-react'
+import { REMOVE_TOKEN } from '../../providers/auth.provider'
 
 const AdminNavbar = () => {
-    const { logout } = useAuth0()
+    const history = useHistory()
 
     const handleLogout = () => {
-        logout({ returnTo: window.location.origin })
+        REMOVE_TOKEN()
+        history.push('/')
     }
 
     return (
@@ -20,7 +21,7 @@ const AdminNavbar = () => {
             <Navbar.Collapse>
                 <Nav className="mr-auto"></Nav>
                 <Nav>
-                    <Nav.Link as={Link} to="" onClick={handleLogout}>
+                    <Nav.Link as={Button} variant="link" onClick={handleLogout}>
                         Salir
                     </Nav.Link>
                 </Nav>

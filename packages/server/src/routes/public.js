@@ -1,8 +1,13 @@
 import { Router } from 'express'
 import roomController from '../controllers/rooms'
+import authController from '../controllers/auth'
 
-const pulbicRouter = Router()
+const publicRouter = Router()
 
-pulbicRouter.get('/room/join/:key', roomController.joinRoom)
+publicRouter.get('/room/join/:key', roomController.joinRoom)
 
-export default pulbicRouter
+// Auth routes
+publicRouter.post('/auth/signup', authController.signUp)
+publicRouter.post('/auth/login', authController.login)
+
+export default publicRouter

@@ -13,6 +13,7 @@ jobs:
                   key: ${{ secrets.SSH_KEY }}
                   script: |
                       cd /opt/app/trivia
-                      git pull -f
+                      git reset --hard
+                      git pull
                       yarn install
                       pm2 reload ecosystem.config.js
