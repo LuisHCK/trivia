@@ -2,11 +2,11 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/a4f6ad39-0d16-4185-8341-87645ad1eec5/deploy-status)](https://app.netlify.com/sites/apptrivia/deploys)
 
-Trivia app using Express + React + Socket.io + Yarn workspaces
+Real time Trivia app using Express + React + Socket.io + Yarn workspaces + MongoDB
 
 ## ✨ Features
 - Realtime with Socket.IO
-- Ligthing fasht React UI
+- Ligthing fast React UI
 - Authentication with Auth0
 - Pretty fun!
 
@@ -21,7 +21,7 @@ yarn workspace client add package-name
 ```
 
 ```bash
-# Install packages for Backend
+# Install packages for Express Backend
 yarn workspace server add package-name
 ```
 
