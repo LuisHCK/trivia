@@ -52,3 +52,15 @@ Start server daemon using included config file
 ```bash
 pm2 start ecosystem.config.js
 ```
+
+## 📸 Screenshots
+
+![Trivia screenshot 1](https://raw.githubusercontent.com/LuisHCK/trivia/master/packages/client/public/screenshots/screenshot_1.jpg)
+![Trivia screenshot 2](https://raw.githubusercontent.com/LuisHCK/trivia/master/packages/client/public/screenshots/screenshot_2.jpg)
+![Trivia screenshot 3](https://raw.githubusercontent.com/LuisHCK/trivia/master/packages/client/public/screenshots/screenshot_3.jpg)
+![Trivia screenshot 4](https://raw.githubusercontent.com/LuisHCK/trivia/master/packages/client/public/screenshots/screenshot_4.jpg)
+![Trivia screenshot 5](https://raw.githubusercontent.com/LuisHCK/trivia/master/packages/client/public/screenshots/screenshot_5.jpg)
+![Trivia screenshot 7](https://raw.githubusercontent.com/LuisHCK/trivia/master/packages/client/public/screenshots/screenshot_6.jpg)
+![Trivia screenshot 7](https://raw.githubusercontent.com/LuisHCK/trivia/master/packages/client/public/screenshots/screenshot_7.jpg)
+![Trivia screenshot 8](https://raw.githubusercontent.com/LuisHCK/trivia/master/packages/client/public/screenshots/screenshot_8.jpg)
+
